@@ -1,0 +1,957 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{RickAssignment}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Assignment 2}\label{assignment-2}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}97}]:} \PY{c+c1}{\PYZsh{}This is a comment in python and it will not be picked up in a program execution.}
+\end{Verbatim}
+
+
+    \section{Introduction to
+YahooFinancials}\label{introduction-to-yahoofinancials}
+
+    A powerful financial data module used for pulling both fundamental and
+technical data from Yahoo Finance
+
+    Install to python via : pip install yahoofinancials
+
+    \subsection{Import YahooFinancials to work with
+Python}\label{import-yahoofinancials-to-work-with-python}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}109}]:} \PY{k+kn}{from} \PY{n+nn}{yahoofinancials} \PY{k}{import} \PY{n}{YahooFinancials}
+\end{Verbatim}
+
+
+    \section{Import packages useful for data manipulation in
+Python}\label{import-packages-useful-for-data-manipulation-in-python}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}110}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+          \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\end{Verbatim}
+
+
+    \section{Firms of Interest}\label{firms-of-interest}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}111}]:} \PY{c+c1}{\PYZsh{}Alphabet Ticker: GOOGL}
+          \PY{n}{googltickr} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GOOGL}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}112}]:} \PY{c+c1}{\PYZsh{}Ford Ticker: F}
+          \PY{n}{fordtickr} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{F}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}113}]:} \PY{c+c1}{\PYZsh{}Walmart Ticker: WMT}
+          \PY{n}{wmttickr} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{WMT}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+
+
+    \section{Obtain Quarterly Balance Sheet Data and Income Statement Data
+from
+YahooFinancials}\label{obtain-quarterly-balance-sheet-data-and-income-statement-data-from-yahoofinancials}
+
+    \subsubsection{Google Quarterly Data}\label{google-quarterly-data}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}141}]:} \PY{c+c1}{\PYZsh{}from yahoo}
+          \PY{n}{yahoo\PYZus{}financials\PYZus{}alphabet} \PY{o}{=} \PY{n}{YahooFinancials}\PY{p}{(}\PY{n}{googltickr}\PY{p}{)}
+          \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}alphabet} \PY{o}{=} \PY{n}{yahoo\PYZus{}financials\PYZus{}alphabet}\PY{o}{.}\PY{n}{get\PYZus{}financial\PYZus{}stmts}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{income\PYZus{}statement\PYZus{}data\PYZus{}qt\PYZus{}alphabet} \PY{o}{=} \PY{n}{yahoo\PYZus{}financials\PYZus{}alphabet}\PY{o}{.}\PY{n}{get\PYZus{}financial\PYZus{}stmts}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{income}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Ford Quarterly Data}\label{ford-quarterly-data}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}142}]:} \PY{n}{yahoo\PYZus{}financials\PYZus{}ford} \PY{o}{=} \PY{n}{YahooFinancials}\PY{p}{(}\PY{n}{fordtickr}\PY{p}{)}
+          \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}ford} \PY{o}{=} \PY{n}{yahoo\PYZus{}financials\PYZus{}ford}\PY{o}{.}\PY{n}{get\PYZus{}financial\PYZus{}stmts}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{income\PYZus{}statement\PYZus{}data\PYZus{}qt\PYZus{}ford} \PY{o}{=} \PY{n}{yahoo\PYZus{}financials\PYZus{}ford}\PY{o}{.}\PY{n}{get\PYZus{}financial\PYZus{}stmts}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{income}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Walmart Quarterly Data}\label{walmart-quarterly-data}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}143}]:} \PY{n}{yahoo\PYZus{}financials\PYZus{}wmt} \PY{o}{=} \PY{n}{YahooFinancials}\PY{p}{(}\PY{n}{wmttickr}\PY{p}{)}
+          \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}wmt} \PY{o}{=} \PY{n}{yahoo\PYZus{}financials\PYZus{}wmt}\PY{o}{.}\PY{n}{get\PYZus{}financial\PYZus{}stmts}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{income\PYZus{}statement\PYZus{}data\PYZus{}qt\PYZus{}wmt} \PY{o}{=} \PY{n}{yahoo\PYZus{}financials\PYZus{}wmt}\PY{o}{.}\PY{n}{get\PYZus{}financial\PYZus{}stmts}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{income}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \section{Example: Display Balance Sheet Data for
+Alphabet}\label{example-display-balance-sheet-data-for-alphabet}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}76}]:} \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}wmt}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}76}]:} \{'balanceSheetHistoryQuarterly': \{'WMT': [\{'2019-04-30': \{'accountsPayable': 45110000000,
+              'capitalSurplus': 2734000000,
+              'cash': 9255000000,
+              'commonStock': 286000000,
+              'goodWill': 31416000000,
+              'inventory': 44751000000,
+              'longTermDebt': 63144000000,
+              'minorityInterest': 6705000000,
+              'netReceivables': 5342000000,
+              'netTangibleAssets': 36789000000,
+              'otherAssets': 16148000000,
+              'otherCurrentLiab': 5280000000,
+              'otherLiab': 12792000000,
+              'otherStockholderEquity': -11091000000,
+              'propertyPlantEquipment': 125241000000,
+              'retainedEarnings': 76276000000,
+              'shortLongTermDebt': 3212000000,
+              'totalAssets': 234544000000,
+              'totalCurrentAssets': 61739000000,
+              'totalCurrentLiabilities': 79888000000,
+              'totalLiab': 159634000000,
+              'totalStockholderEquity': 68205000000,
+              'treasuryStock': -11091000000\}\},
+            \{'2019-01-31': \{'accountsPayable': 47060000000,
+              'capitalSurplus': 2965000000,
+              'cash': 7722000000,
+              'commonStock': 288000000,
+              'deferredLongTermAssetCharges': 1796000000,
+              'goodWill': 31181000000,
+              'inventory': 44269000000,
+              'longTermDebt': 43948000000,
+              'longTermInvestments': 3995000000,
+              'minorityInterest': 7138000000,
+              'netReceivables': 6283000000,
+              'netTangibleAssets': 41315000000,
+              'otherAssets': 10827000000,
+              'otherCurrentAssets': 34000000,
+              'otherCurrentLiab': 2360000000,
+              'otherLiab': 11553000000,
+              'otherStockholderEquity': -11542000000,
+              'propertyPlantEquipment': 111395000000,
+              'retainedEarnings': 80785000000,
+              'shortLongTermDebt': 1876000000,
+              'totalAssets': 219295000000,
+              'totalCurrentAssets': 61897000000,
+              'totalCurrentLiabilities': 77477000000,
+              'totalLiab': 139661000000,
+              'totalStockholderEquity': 72496000000,
+              'treasuryStock': -11542000000\}\},
+            \{'2018-10-31': \{'accountsPayable': 49729000000,
+              'capitalSurplus': 2887000000,
+              'cash': 9174000000,
+              'commonStock': 291000000,
+              'goodWill': 31044000000,
+              'inventory': 50380000000,
+              'longTermDebt': 43745000000,
+              'longTermInvestments': 3816000000,
+              'minorityInterest': 7473000000,
+              'netReceivables': 5785000000,
+              'netTangibleAssets': 40952000000,
+              'otherAssets': 10928000000,
+              'otherCurrentLiab': 4100000000,
+              'otherLiab': 10997000000,
+              'otherStockholderEquity': -11469000000,
+              'propertyPlantEquipment': 111349000000,
+              'retainedEarnings': 80287000000,
+              'shortLongTermDebt': 2591000000,
+              'totalAssets': 226583000000,
+              'totalCurrentAssets': 69446000000,
+              'totalCurrentLiabilities': 85751000000,
+              'totalLiab': 147114000000,
+              'totalStockholderEquity': 71996000000,
+              'treasuryStock': -11469000000\}\},
+            \{'2018-07-31': \{'accountsPayable': 43128000000,
+              'capitalSurplus': 2710000000,
+              'cash': 15840000000,
+              'commonStock': 294000000,
+              'goodWill': 17840000000,
+              'inventory': 41985000000,
+              'longTermDebt': 45326000000,
+              'longTermInvestments': 5613000000,
+              'minorityInterest': 2627000000,
+              'netReceivables': 5002000000,
+              'netTangibleAssets': 53345000000,
+              'otherAssets': 5222000000,
+              'otherCurrentLiab': 5334000000,
+              'otherLiab': 8631000000,
+              'otherStockholderEquity': -12629000000,
+              'propertyPlantEquipment': 111017000000,
+              'retainedEarnings': 80810000000,
+              'shortLongTermDebt': 1090000000,
+              'totalAssets': 206062000000,
+              'totalCurrentAssets': 66370000000,
+              'totalCurrentLiabilities': 71683000000,
+              'totalLiab': 132250000000,
+              'totalStockholderEquity': 71185000000,
+              'treasuryStock': -12629000000\}\}]\}\}
+\end{Verbatim}
+            
+    \section{Summary of Financial Ratios}\label{summary-of-financial-ratios}
+
+    The first step in a financial analysis typically includes an evaluation
+of the firm's ratios which are designed to show relationships between
+financial statement accounts \emph{within} firms and \emph{between}
+firms.
+
+    \section{Liquidity Ratios}\label{liquidity-ratios}
+
+    Ratios that show the relationship of a firm's cash and other current
+assets to its current liabilities; they provide an indication of the
+firm's ability to meet its current obligations.
+
+    A \textbf{liquid asset} is one that can be easily converted to cash
+without significant loss of its orignal value. Converting assets-\/-
+especially current assets such as inventory and receivables to cash is
+the primary means by which a firm obtains the funds needed to pay its
+current bills. A firm's \emph{liquidity position} deals with the
+question of how well the company is able to meet its current
+obligations. Two commonly used \textbf{liquidity ratios} are discussed
+next.
+
+    \subsection{Current Ratio}\label{current-ratio}
+
+    \(Current\,Ratio = \frac{Current \, assets}{Current \, liabilities}\)
+
+    Current ratio provides the best single indicator of the extent to which
+the claims of short-term creditos are covered by assets that are
+expected to be converted to cash fairly quickly, it is the most commonly
+used measure of short-term solvency.
+
+    \subsubsection{\texorpdfstring{We begin by extracting the \emph{Total
+Current Assets} from the data set we just
+created:}{We begin by extracting the Total Current Assets from the data set we just created:}}\label{we-begin-by-extracting-the-total-current-assets-from-the-data-set-we-just-created}
+
+    \subsubsection{Alphabet Total Current
+Assets}\label{alphabet-total-current-assets}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{n}{total\PYZus{}current\PYZus{}assets\PYZus{}alphabet} \PY{o}{=} \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}alphabet}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balanceSheetHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{GOOGL}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}03\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{totalCurrentAssets}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{total\PYZus{}current\PYZus{}assets\PYZus{}alphabet}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}38}]:} 138207000000
+\end{Verbatim}
+            
+    \subsubsection{Ford Total Current
+Assets}\label{ford-total-current-assets}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}51}]:} \PY{n}{total\PYZus{}current\PYZus{}assets\PYZus{}ford} \PY{o}{=} \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}ford}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balanceSheetHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{F}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}03\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{totalCurrentAssets}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{total\PYZus{}current\PYZus{}assets\PYZus{}ford}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}51}]:} 121195000000
+\end{Verbatim}
+            
+    \subsubsection{Walmart Total Current
+Assets}\label{walmart-total-current-assets}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}62}]:} \PY{n}{total\PYZus{}current\PYZus{}assets\PYZus{}wmt} \PY{o}{=} \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}wmt}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balanceSheetHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{WMT}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}04\PYZhy{}30}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{totalCurrentAssets}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{total\PYZus{}current\PYZus{}assets\PYZus{}wmt}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}62}]:} 61739000000
+\end{Verbatim}
+            
+    \subsubsection{\texorpdfstring{Now that the Total Current Assets are
+displayed we extract the \emph{Current Liabilities} associated to each
+firm}{Now that the Total Current Assets are displayed we extract the Current Liabilities associated to each firm}}\label{now-that-the-total-current-assets-are-displayed-we-extract-the-current-liabilities-associated-to-each-firm}
+
+    \subsubsection{Alphabet Current
+Liabilities}\label{alphabet-current-liabilities}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}55}]:} \PY{n}{total\PYZus{}current\PYZus{}liabilities\PYZus{}alphabet} \PY{o}{=} \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}alphabet}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balanceSheetHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{GOOGL}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}03\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{totalCurrentLiabilities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{total\PYZus{}current\PYZus{}liabilities\PYZus{}alphabet}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}55}]:} 34910000000
+\end{Verbatim}
+            
+    \subsubsection{Ford Current Liabilities}\label{ford-current-liabilities}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}56}]:} \PY{n}{total\PYZus{}current\PYZus{}liabilities\PYZus{}ford} \PY{o}{=} \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}ford}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balanceSheetHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{F}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}03\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{totalCurrentLiabilities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{total\PYZus{}current\PYZus{}liabilities\PYZus{}ford}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}56}]:} 99237000000
+\end{Verbatim}
+            
+    \subsubsection{Walmart Current
+Liabilities}\label{walmart-current-liabilities}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}57}]:} \PY{n}{total\PYZus{}current\PYZus{}liabilities\PYZus{}wmt} \PY{o}{=} \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}wmt}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balanceSheetHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{WMT}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}04\PYZhy{}30}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{totalCurrentLiabilities}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{total\PYZus{}current\PYZus{}liabilities\PYZus{}wmt}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}57}]:} 79888000000
+\end{Verbatim}
+            
+    \section{We now compute the Current
+Ratio}\label{we-now-compute-the-current-ratio}
+
+    \subsubsection{\texorpdfstring{\(Current\,Ratio = \frac{Current \, assets}{Current \, liabilities}\)}{Current\textbackslash{},Ratio = \textbackslash{}frac\{Current \textbackslash{}, assets\}\{Current \textbackslash{}, liabilities\}}}\label{currentratio-fraccurrent-assetscurrent-liabilities}
+
+    \subsubsection{Current Ratio Alphabet}\label{current-ratio-alphabet}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}77}]:} \PY{n}{current\PYZus{}ratio\PYZus{}alphabet} \PY{o}{=} \PY{p}{(}\PY{n}{total\PYZus{}current\PYZus{}assets\PYZus{}alphabet}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{total\PYZus{}current\PYZus{}liabilities\PYZus{}alphabet}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{current\PYZus{}ratio\PYZus{}alphabet}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+3.958951589802349
+
+    \end{Verbatim}
+
+    \subsubsection{Current Ratio Ford}\label{current-ratio-ford}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}78}]:} \PY{n}{current\PYZus{}ratio\PYZus{}ford} \PY{o}{=} \PY{p}{(}\PY{n}{total\PYZus{}current\PYZus{}assets\PYZus{}ford}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{total\PYZus{}current\PYZus{}liabilities\PYZus{}ford}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{current\PYZus{}ratio\PYZus{}ford}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1.2212682769531527
+
+    \end{Verbatim}
+
+    \subsubsection{Current Ratio Walmart}\label{current-ratio-walmart}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}96}]:} \PY{n}{current\PYZus{}ratio\PYZus{}wmt} \PY{o}{=} \PY{p}{(}\PY{n}{total\PYZus{}current\PYZus{}assets\PYZus{}wmt}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{total\PYZus{}current\PYZus{}liabilities\PYZus{}wmt}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{current\PYZus{}ratio\PYZus{}wmt}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0.7728194472261166
+
+    \end{Verbatim}
+
+    \subsection{Quick Ratio}\label{quick-ratio}
+
+    \(Quick \,Ratio = \frac{Current Assets\,-\,Inventories}{Current\,Liabilities}\)
+
+    Since inventories are the least liquid of a firm's current assets, they
+are the assets on which losses are most likely to occur in the event of
+an "emergency" liquidation. Having a measure of the firm's ability to
+pay off short-term obligations without relying on the sale of
+inventories is important. Now it is necessary to extract the inventory
+data of each firm from the quarterly datasets.
+
+    \subsection{Import Inventory Data From Each
+Firm}\label{import-inventory-data-from-each-firm}
+
+    \subsubsection{Alphabet Inventory:}\label{alphabet-inventory}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}105}]:} \PY{n}{inventory\PYZus{}alphabet} \PY{o}{=} \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}alphabet}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balanceSheetHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{GOOGL}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}03\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inventory}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{inventory\PYZus{}alphabet}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1053000000
+
+    \end{Verbatim}
+
+    \subsubsection{Ford Inventory:}\label{ford-inventory}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}104}]:} \PY{n}{inventory\PYZus{}ford} \PY{o}{=} \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}ford}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balanceSheetHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{F}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}03\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inventory}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{inventory\PYZus{}ford}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+12333000000
+
+    \end{Verbatim}
+
+    \subsubsection{Walmart Inventory:}\label{walmart-inventory}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}95}]:} \PY{n}{inventory\PYZus{}wmt} \PY{o}{=} \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}wmt}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balanceSheetHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{WMT}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}04\PYZhy{}30}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inventory}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{inventory\PYZus{}wmt}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+44751000000
+
+    \end{Verbatim}
+
+    \section{Quick Ratio Calculations:}\label{quick-ratio-calculations}
+
+    \subsection{Quick Ratio Alphabet}\label{quick-ratio-alphabet}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}106}]:} \PY{n}{quick\PYZus{}ratio\PYZus{}alphabet} \PY{o}{=} \PY{p}{(}\PY{n}{total\PYZus{}current\PYZus{}assets\PYZus{}alphabet} \PY{o}{\PYZhy{}} \PY{n}{inventory\PYZus{}alphabet}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{total\PYZus{}current\PYZus{}liabilities\PYZus{}alphabet}\PY{p}{)}
+          \PY{n}{quick\PYZus{}ratio\PYZus{}alphabet}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}106}]:} 3.928788312804354
+\end{Verbatim}
+            
+    \subsubsection{Quick Ratio Ford:}\label{quick-ratio-ford}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}107}]:} \PY{n}{quick\PYZus{}ratio\PYZus{}ford} \PY{o}{=} \PY{p}{(}\PY{n}{total\PYZus{}current\PYZus{}assets\PYZus{}ford} \PY{o}{\PYZhy{}} \PY{n}{inventory\PYZus{}ford}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{total\PYZus{}current\PYZus{}liabilities\PYZus{}ford}\PY{p}{)}
+          \PY{n}{quick\PYZus{}ratio\PYZus{}ford}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}107}]:} 1.096990033959108
+\end{Verbatim}
+            
+    \subsubsection{Quick Ratio Walmart:}\label{quick-ratio-walmart}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}108}]:} \PY{n}{quick\PYZus{}ratio\PYZus{}wmt} \PY{o}{=} \PY{p}{(}\PY{n}{total\PYZus{}current\PYZus{}assets\PYZus{}wmt} \PY{o}{\PYZhy{}} \PY{n}{inventory\PYZus{}wmt}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{total\PYZus{}current\PYZus{}liabilities\PYZus{}wmt}\PY{p}{)}
+          \PY{n}{quick\PYZus{}ratio\PYZus{}wmt}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}108}]:} 0.21264770678950531
+\end{Verbatim}
+            
+    \section{Asset Management Ratios}\label{asset-management-ratios}
+
+    Asset management ratios measure how effectively the firm is managing its
+assets. In general, these ratios are designed to answer the following
+question: Does the total amount of each type of asset as reported on the
+balance sheet seem reasonable, too high, or too low in view of current
+and projected sales levels?
+
+    \subsection{Inventory Turnover}\label{inventory-turnover}
+
+    \$ Inventory, Turnover = \frac{Cost\,of\,goods\,sold}{Inventory}\$
+
+    Inventory turnover provides an indication of how well the firm is
+managing its inventory.Now we must import the cost of goods sold for
+each firm.
+
+    \subsubsection{Alphabet Cost of Goods
+Sold:}\label{alphabet-cost-of-goods-sold}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}115}]:} \PY{n}{cost\PYZus{}of\PYZus{}rev\PYZus{}alphabet} \PY{o}{=} \PY{n}{yahoo\PYZus{}financials\PYZus{}alphabet}\PY{o}{.}\PY{n}{get\PYZus{}cost\PYZus{}of\PYZus{}revenue}\PY{p}{(}\PY{p}{)} 
+          \PY{n}{costofrev}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}115}]:} 59549000000
+\end{Verbatim}
+            
+    \subsubsection{Ford Cost of Goods Sold:}\label{ford-cost-of-goods-sold}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}119}]:} \PY{n}{cost\PYZus{}of\PYZus{}rev\PYZus{}ford} \PY{o}{=} \PY{n}{yahoo\PYZus{}financials\PYZus{}ford}\PY{o}{.}\PY{n}{get\PYZus{}cost\PYZus{}of\PYZus{}revenue}\PY{p}{(}\PY{p}{)} 
+          \PY{n}{cost\PYZus{}of\PYZus{}rev\PYZus{}ford}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}119}]:} 145459000000
+\end{Verbatim}
+            
+    \subsubsection{Walmart Cost of Goods
+Sold:}\label{walmart-cost-of-goods-sold}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}118}]:} \PY{n}{cost\PYZus{}of\PYZus{}rev\PYZus{}wmt} \PY{o}{=} \PY{n}{yahoo\PYZus{}financials\PYZus{}wmt}\PY{o}{.}\PY{n}{get\PYZus{}cost\PYZus{}of\PYZus{}revenue}\PY{p}{(}\PY{p}{)} 
+          \PY{n}{cost\PYZus{}of\PYZus{}rev\PYZus{}wmt}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}118}]:} 385301000000
+\end{Verbatim}
+            
+    \section{Inventory Turnover
+Calculations}\label{inventory-turnover-calculations}
+
+    \subsection{Inventory Turnover
+Alphabet:}\label{inventory-turnover-alphabet}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}128}]:} \PY{n}{inventory\PYZus{}turnover\PYZus{}alphabet} \PY{o}{=} \PY{n}{cost\PYZus{}of\PYZus{}rev\PYZus{}alphabet} \PY{o}{/} \PY{n}{inventory\PYZus{}alphabet}
+          \PY{n}{inventory\PYZus{}turnover\PYZus{}alphabet}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}128}]:} 56.55175688509022
+\end{Verbatim}
+            
+    \subsection{Inventory Turnover Ford}\label{inventory-turnover-ford}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}129}]:} \PY{n}{inventory\PYZus{}turnover\PYZus{}ford} \PY{o}{=} \PY{n}{cost\PYZus{}of\PYZus{}rev\PYZus{}ford} \PY{o}{/} \PY{n}{inventory\PYZus{}ford}
+          \PY{n}{inventory\PYZus{}turnover\PYZus{}ford}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}129}]:} 11.79429173761453
+\end{Verbatim}
+            
+    \subsection{Inventory Turnover
+Walmart}\label{inventory-turnover-walmart}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}130}]:} \PY{n}{inventory\PYZus{}turnover\PYZus{}wmt} \PY{o}{=} \PY{n}{cost\PYZus{}of\PYZus{}rev\PYZus{}wmt} \PY{o}{/} \PY{n}{inventory\PYZus{}wmt}
+          \PY{n}{inventory\PYZus{}turnover\PYZus{}wmt}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}130}]:} 8.609885812607539
+\end{Verbatim}
+            
+    \section{Days Sales Outstanding
+Ratio}\label{days-sales-outstanding-ratio}
+
+    \$ Days,Sales,Outstanding =
+\frac{Accounts\,Receivable}{\frac{Annual\,Sales}{360}} \$
+
+    \subsection{To calculate Days Sales Outstanding we need Accounts
+Receivable and Annual Sales
+Data}\label{to-calculate-days-sales-outstanding-we-need-accounts-receivable-and-annual-sales-data}
+
+\subsubsection{Import the accounts receivable data for each
+firm}\label{import-the-accounts-receivable-data-for-each-firm}
+
+    \subsection{Accounts Receivable
+Alphabet:}\label{accounts-receivable-alphabet}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}139}]:} \PY{n}{accounts\PYZus{}receivable\PYZus{}alphabet} \PY{o}{=} \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}alphabet}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balanceSheetHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{GOOGL}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}03\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{netReceivables}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{accounts\PYZus{}receivable\PYZus{}alphabet}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+19260000000
+
+    \end{Verbatim}
+
+    \subsection{Accounts Receivable Ford:}\label{accounts-receivable-ford}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}140}]:} \PY{n}{accounts\PYZus{}receivable\PYZus{}ford} \PY{o}{=} \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}ford}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balanceSheetHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{F}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}03\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{netReceivables}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{accounts\PYZus{}receivable\PYZus{}ford}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+3837000000
+
+    \end{Verbatim}
+
+    \subsection{Accounts Receivable
+Walmart:}\label{accounts-receivable-walmart}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}158}]:} \PY{n}{accounts\PYZus{}receivable\PYZus{}wmt} \PY{o}{=} \PY{n}{balance\PYZus{}sheet\PYZus{}data\PYZus{}qt\PYZus{}wmt}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{balanceSheetHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{WMT}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}04\PYZhy{}30}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{netReceivables}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{accounts\PYZus{}receivable\PYZus{}wmt}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+5342000000
+
+    \end{Verbatim}
+
+    \subsection{Import annual sales data}\label{import-annual-sales-data}
+
+    \subsubsection{Annual Sales Data
+Alphabet}\label{annual-sales-data-alphabet}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}146}]:} \PY{n}{annual\PYZus{}sales\PYZus{}alphabet} \PY{o}{=} \PY{n}{income\PYZus{}statement\PYZus{}data\PYZus{}qt\PYZus{}alphabet}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{incomeStatementHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{GOOGL}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}03\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{totalRevenue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{annual\PYZus{}sales\PYZus{}alphabet}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+36339000000
+
+    \end{Verbatim}
+
+    \subsubsection{Annual Sales Data Ford}\label{annual-sales-data-ford}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}149}]:} \PY{n}{annual\PYZus{}sales\PYZus{}ford} \PY{o}{=} \PY{n}{income\PYZus{}statement\PYZus{}data\PYZus{}qt\PYZus{}ford}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{incomeStatementHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{F}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}03\PYZhy{}31}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{totalRevenue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{annual\PYZus{}sales\PYZus{}ford}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+40342000000
+
+    \end{Verbatim}
+
+    \subsubsection{Annual Sales Data
+Walmart}\label{annual-sales-data-walmart}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}151}]:} \PY{n}{annual\PYZus{}sales\PYZus{}wmt} \PY{o}{=} \PY{n}{income\PYZus{}statement\PYZus{}data\PYZus{}qt\PYZus{}wmt}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{incomeStatementHistoryQuarterly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{WMT}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019\PYZhy{}04\PYZhy{}30}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{totalRevenue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{annual\PYZus{}sales\PYZus{}wmt}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+123925000000
+
+    \end{Verbatim}
+
+    \section{Days Sales Outstanding
+Calculation}\label{days-sales-outstanding-calculation}
+
+    \subsection{Days Sales Outstanding
+Alphabet}\label{days-sales-outstanding-alphabet}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}153}]:} \PY{n}{days\PYZus{}sales\PYZus{}outstanding\PYZus{}alphabet} \PY{o}{=} \PY{p}{(}\PY{n}{accounts\PYZus{}receivable\PYZus{}alphabet}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{annual\PYZus{}sales\PYZus{}alphabet} \PY{o}{/} \PY{l+m+mi}{360}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{days\PYZus{}sales\PYZus{}outstanding\PYZus{}alphabet}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}153}]:} 190.80326921489308
+\end{Verbatim}
+            
+    \subsection{Days Sales Outstanding
+Ford}\label{days-sales-outstanding-ford}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}156}]:} \PY{n}{days\PYZus{}sales\PYZus{}outstanding\PYZus{}ford} \PY{o}{=} \PY{p}{(}\PY{n}{accounts\PYZus{}receivable\PYZus{}ford}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{annual\PYZus{}sales\PYZus{}ford} \PY{o}{/} \PY{l+m+mi}{360}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{days\PYZus{}sales\PYZus{}outstanding\PYZus{}ford}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{Days Sales Outstanding
+Walmart}\label{days-sales-outstanding-walmart}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{days\PYZus{}sales\PYZus{}outstanding\PYZus{}wmt} \PY{o}{=} \PY{p}{(}\PY{n}{accounts\PYZus{}receivable\PYZus{}wmt}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{annual\PYZus{}sales\PYZus{}wmt} \PY{o}{/} \PY{l+m+mi}{360}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{days\PYZus{}sales\PYZus{}outstanding\PYZus{}wmt}\PY{p}{)}
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
